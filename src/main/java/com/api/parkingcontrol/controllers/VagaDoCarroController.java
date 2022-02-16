@@ -60,4 +60,14 @@ public class VagaDoCarroController {
        return ResponseEntity.status(HttpStatus.OK).body(VariavelOpcional.get());
    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> apagarUmaVaga(@PathVariable(value = "id") UUID id){
+        Optional<VagaDoCarroModel> VariavelOpcional = VARIAVELservice.encontrarPorId(id);
+        if (!VariavelOpcional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga não encontrada");
+        }
+        VARIAVELservice.deletar(VariavelOpcional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Vaga deletada com sucesso");
+    }
+
 }

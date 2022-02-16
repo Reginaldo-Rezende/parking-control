@@ -50,4 +50,9 @@ public class VagaDoCarroService {
     public Optional<VagaDoCarroModel> encontrarPorId(UUID id) {
         return vagaDoCarroRepository.findById(id);
     }
+
+    @Transactional
+    public void deletar(VagaDoCarroModel vagaDoCarroModel) {
+        vagaDoCarroRepository.delete(vagaDoCarroModel);
+    }
 }
