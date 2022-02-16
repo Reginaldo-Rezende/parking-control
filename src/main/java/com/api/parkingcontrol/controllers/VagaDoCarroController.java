@@ -26,10 +26,21 @@ public class VagaDoCarroController {
 
     @PostMapping
     public ResponseEntity<Object> salvarVAGA (@RequestBody @Valid VagaDoCarroDto VARIAVELdto ){
+
+        if(VARIAVELservice.existePlacaDoCarro(VARIAVELdto.getPlacaDoCarro())){
+            return ResponseEntity.status(HttpStatus.CONFLICT) .body("ERRO: A placa do carro ja consta no sistema");
+        }
+        if(VARIAVELservice.existeNumeroDaVaga(VARIAVELdto.getNumVaga())){
+            return ResponseEntity.status(HttpStatus.CONFLICT) .body("ERRO: O numero da vaga ja esta em uso");
+        }
+        if(VARIAVELservice.existeApartamentoAndBloco(VARIAVELdto.getApartamento(),VARIAVELdto.getBlocoApartamento())){
+            return ResponseEntity.status(HttpStatus.CONFLICT) .body("ERRO: o apartamento/bloco ja esta cadastrado no sistema");
+        }
         var VARIAVELmodel = new VagaDoCarroModel();
         BeanUtils.copyProperties(VARIAVELdto, VARIAVELmodel);
         VARIAVELmodel.setDataDoRegistro(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(VARIAVELservice.SALVAR(VARIAVELmodel));
+
     }
 
 

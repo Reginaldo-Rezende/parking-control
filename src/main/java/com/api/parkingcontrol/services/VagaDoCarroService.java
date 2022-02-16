@@ -23,6 +23,20 @@ public class VagaDoCarroService {
 
     @Transactional
     public VagaDoCarroModel SALVAR(VagaDoCarroModel variaveLmodel) {
+
         return vagaDoCarroRepository.save(variaveLmodel);
+    }
+
+    public boolean existePlacaDoCarro(String placaDoCarro) {
+     return vagaDoCarroRepository.existsByPlacaDoCarro(placaDoCarro);
+    }
+
+    public boolean existeNumeroDaVaga(String numVaga) {
+        return vagaDoCarroRepository.existsByNumVaga(numVaga);
+    }
+
+
+    public boolean existeApartamentoAndBloco(String apartamento, String blocoApartamento) {
+        return vagaDoCarroRepository.existsByApartamentoAndBlocoApartamento(apartamento,blocoApartamento);
     }
 }
