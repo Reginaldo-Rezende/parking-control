@@ -70,4 +70,36 @@ public class VagaDoCarroController {
         return ResponseEntity.status(HttpStatus.OK).body("Vaga deletada com sucesso");
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> alterandoUmaVaga(@PathVariable(value = "id") UUID id,
+                                                   @RequestBody @Valid VagaDoCarroDto variavelDtoRecebida){
+        Optional<VagaDoCarroModel> VariavelOpcional = VARIAVELservice.encontrarPorId(id);
+        if (!VariavelOpcional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga não encontrada");
+        }
+            // DUAS FORMAS DE FAZER
+
+        // PRIMEIRA
+          var variavelMODELO = new VagaDoCarroModel();
+        BeanUtils.copyProperties(variavelDtoRecebida,variavelMODELO);
+        variavelMODELO.setId(VariavelOpcional.get().getId());
+        variavelMODELO.setDataDoRegistro(VariavelOpcional.get().getDataDoRegistro());
+
+
+        /* SEGUNDA
+        var variavelMODELO = VariavelOpcional.get();
+        variavelMODELO.setNumVaga(variavelDtoRecebida.getNumVaga());
+        variavelMODELO.setPlacaDoCarro(variavelDtoRecebida.getPlacaDoCarro());
+        variavelMODELO.setMarcaDoCarro(variavelDtoRecebida.getMarcaDoCarro());
+        variavelMODELO.setModeloDoCarro(variavelDtoRecebida.getModeloDoCarro());
+        variavelMODELO.setCorDoCarro(variavelDtoRecebida.getCorDoCarro());
+        variavelMODELO.setNomeDoResponsavel(variavelDtoRecebida.getNomeDoResponsavel());
+        variavelMODELO.setApartamento(variavelDtoRecebida.getApartamento());
+        variavelMODELO.setBlocoApartamento(variavelDtoRecebida.getBlocoApartamento());
+        */
+
+        return ResponseEntity.status(HttpStatus.OK).body(VARIAVELservice.SALVAR(variavelMODELO));
+
+    }
+
 }
