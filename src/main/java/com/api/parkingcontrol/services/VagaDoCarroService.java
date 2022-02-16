@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class VagaDoCarroService {
@@ -39,4 +40,9 @@ public class VagaDoCarroService {
     public boolean existeApartamentoAndBloco(String apartamento, String blocoApartamento) {
         return vagaDoCarroRepository.existsByApartamentoAndBlocoApartamento(apartamento,blocoApartamento);
     }
+
+    public List<VagaDoCarroModel> trazerTodos() {
+    return vagaDoCarroRepository.findAll();
+    }
+
 }
