@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*",maxAge = 3600)
@@ -49,5 +51,13 @@ public class VagaDoCarroController {
            return ResponseEntity.status(HttpStatus.OK).body(VARIAVELservice.trazerTodos());
     }
 
+   @GetMapping("/{id}")
+    public ResponseEntity<Object> retornarUmaVaga(@PathVariable(value = "id") UUID id){
+       Optional<VagaDoCarroModel> VariavelOpcional = VARIAVELservice.encontrarPorId(id);
+       if (!VariavelOpcional.isPresent()){
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga não encontrada");
+       }
+       return ResponseEntity.status(HttpStatus.OK).body(VariavelOpcional.get());
+   }
 
 }

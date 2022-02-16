@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class VagaDoCarroService {
@@ -45,4 +47,7 @@ public class VagaDoCarroService {
     return vagaDoCarroRepository.findAll();
     }
 
+    public Optional<VagaDoCarroModel> encontrarPorId(UUID id) {
+        return vagaDoCarroRepository.findById(id);
+    }
 }
